@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>YouTube to MP3 Converter</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fa-brands fa-youtube"></i> YouTube to MP3 Converter</h1>
+            <p>By using our service, you are accepting our <a href="#">terms of service</a>.</p>
+        </header>
+
+        <section class="converter-form">
+            <form action="/convert-mp3" method="POST" id="form">
+                <div class="input-group">
+                    <input type="text" name="VedioID" placeholder="Paste YouTube link here..." required>
+                    <button id="convert-btn" type="submit">Start <i class="fa fa-arrow-right"></i></button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Display the video title below the input field -->
+        <% if (typeof song_title !== "undefined") { %>
+            <section class="video-title">
+                <h2><%= song_title %></h2>
+            </section>
+        <% } %>
+
+        <!-- Display the video thumbnail if available -->
+        <% if (typeof thumbnail_url !== "undefined") { %>
+            <section class="video-thumbnail">
+                <img src="<%= thumbnail_url %>" alt="Video Thumbnail">
+            </section>
+        <% } %>
+
+        <section class="conversion-results">
+            <% if (typeof success !== "undefined" && success) { %>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Quality</th>
+                            <th>File Size</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>320kbps</td>
+                            <td>2.52 MB</td>
+                            <td><a href="<%= song_link %>?q=320" class="convert-btn"><i class="fa-solid fa-music"></i> Convert / Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>256kbps</td>
+                            <td>2.01 MB</td>
+                            <td><a href="<%= song_link %>?q=256" class="convert-btn"><i class="fa-solid fa-music"></i> Convert / Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>192kbps</td>
+                            <td>1.51 MB</td>
+                            <td><a href="<%= song_link %>?q=192" class="convert-btn"><i class="fa-solid fa-music"></i> Convert / Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>128kbps</td>
+                            <td>1.01 MB</td>
+                            <td><a href="<%= song_link %>?q=128" class="convert-btn"><i class="fa-solid fa-music"></i> Convert / Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>64kbps</td>
+                            <td>515.63 KB</td>
+                            <td><a href="<%= song_link %>?q=64" class="convert-btn"><i class="fa-solid fa-music"></i> Convert / Download</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            <% } else if (typeof success !== "undefined" && !success) { %>
+                <div class="error-message">
+                    <p><%= message %></p>
+                </div>
+            <% } %>
+        </section>
+    </div>
+</body>
+</html>
